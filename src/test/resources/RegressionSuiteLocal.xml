@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Parallel Test" thread-count="1" parallel="classes">
+
+    <!--<listeners>
+            <listener class-name="com.cync.base.RetryListener"/>
+      </listeners>-->
+
+    <test name="Cync Test Suite">
+        <parameter name="browserName" value="chrome" />
+        <parameter name="localBrowserPath"
+                   value="/chromedriver.exe" />
+        <parameter name="selGrid" value="false" />
+        <parameter name="nodeURL" value="http://172.16.5.89:4444/wd/hub"/>
+        <parameter name="url" value="https://www.google.com/"/>
+        <classes>
+            <class name="AdminTS.Googletestcases">
+                <methods>
+                    <include name="navigateToGoogleTextBox"></include>
+                    <include name="navigateToGmail"></include>
+                    <include name="navigateToGoogleImages"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
