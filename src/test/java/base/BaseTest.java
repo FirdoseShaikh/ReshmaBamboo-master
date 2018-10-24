@@ -44,7 +44,7 @@ public abstract class BaseTest {
  
  @Parameters({"browserName","localBrowserPath","selGrid","nodeURL","url"})
  @BeforeMethod(alwaysRun=true)
- public void beforeMethod(@Optional ("chrome") String browserName,@Optional ("D:\\AWS\\Project\\ReshmaBamboo-master\\ReshmaBamboo-master\\src\\test\\resources\\chromedriver.exe") String localBrowserPath,
+ public void beforeMethod(@Optional ("chrome") String browserName,@Optional ("D:\\AWS\\Project\\ReshmaBamboo-master\\ReshmaBamboo-master\\src\\test\\resources\\chromedriver") String localBrowserPath,
    @Optional("false") Boolean selGrid,@Optional ("http://172.16.11.44:5566/wd/hub") String nodeURL,@Optional ("https://www.google.com/") String url,
    Method method
  ) throws MalformedURLException {
