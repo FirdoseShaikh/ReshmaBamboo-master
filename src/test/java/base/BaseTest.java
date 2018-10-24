@@ -19,8 +19,11 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -47,7 +50,7 @@ public abstract class BaseTest {
  public void beforeMethod(@Optional ("chrome") String browserName,@Optional ("D:\\AWS\\Project\\ReshmaBamboo-master\\ReshmaBamboo-master\\src\\test\\resources\\chromedriver") String localBrowserPath,
    @Optional("false") Boolean selGrid,@Optional ("http://172.16.11.44:5566/wd/hub") String nodeURL,@Optional ("https://www.google.com/") String url,
    Method method
- ) throws MalformedURLException {
+ ) throws IOException {
   
   if(selGrid) {
      /* System.out.println("selGrid is "+selGrid);
@@ -74,7 +77,12 @@ public abstract class BaseTest {
               final String dir_localBrowserPath = System.getProperty("user.dir") + "/src/test/resources/" + "chromedriver";
               //   final String dir_localBrowserPath = System.getProperty("user.dir")+"\\src\\test\\resources\\"+localBrowserPath;
 //
-              System.setProperty("webdriver.chrome.driver", dir_localBrowserPath);
+              ChromeDriverService service = new ChromeDriverService.Builder()
+                      .usingDriverExecutable(new File(dir_localBrowserPath))
+                      .usingAnyFreePort()
+                      .build();
+              service.start();
+              /*System.setProperty("webdriver.chrome.driver", dir_localBrowserPath);
               ChromeOptions options = new ChromeOptions();
               options.addArguments("port=5566");
               options.addArguments("headless");
@@ -83,7 +91,7 @@ public abstract class BaseTest {
               options.addArguments("--disable-extensions");
               options.addArguments("window-size=1200x600");
               options.addArguments("--no-sandbox");
-              WebDriver webDriver = new ChromeDriver(options);
+              WebDriver webDriver = new ChromeDriver(options);*/
              /* capability = DesiredCapabilities.chrome();
               options = new ChromeOptions();
               options.addArguments("Web Test", "start-maximizing", "no-default-browser-check");
@@ -103,8 +111,20 @@ public abstract class BaseTest {
               drivers.put(driver, thread);
               break;
           case "FIREFOX":
+              String Xport = System.getProperty("lmportal.xvfb.id", ":1");
 
-              System.setProperty("webdriver.gecko.driver", localBrowserPath);
+              final File firefoxPath = new File(System.getProperty("lmportal.deploy.firefox.path", "/usr/bin/firefox"));
+
+              FirefoxBinary firefoxBinary = new FirefoxBinary(firefoxPath);
+
+             /* GeckoDriverService service = new GeckoDriverService.Builder()
+
+              firefoxBinary.setEnvironmentProperty("DISPLAY", Xport);
+*/
+
+
+              //Below is working code for windows commented by Rakesh for R&D
+             /* System.setProperty("webdriver.gecko.driver", localBrowserPath);
               capability = DesiredCapabilities.firefox();
               capability.setCapability("marionette", true);
               capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
@@ -114,7 +134,7 @@ public abstract class BaseTest {
               } else {
                   driver = new FirefoxDriver();
               }
-              drivers.put(driver, thread);
+              drivers.put(driver, thread);*/
               break;
           case "IE":
               System.setProperty("webdriver.ie.driver", localBrowserPath);
