@@ -75,14 +75,21 @@ public abstract class BaseTest {
               //   final String dir_localBrowserPath = System.getProperty("user.dir")+"\\src\\test\\resources\\"+localBrowserPath;
 
               System.setProperty("webdriver.chrome.driver", dir_localBrowserPath);
-
-              capability = DesiredCapabilities.chrome();
+              ChromeOptions options = new ChromeOptions();
+              options.addArguments("headless");
+              options.addArguments("--disable-gpu");
+              options.addArguments("disable-infobars");
+              options.addArguments("--disable-extensions");
+              options.addArguments("window-size=1200x600");
+              options.addArguments("--no-sandbox");
+              WebDriver webDriver = new ChromeDriver(options);
+             /* capability = DesiredCapabilities.chrome();
               options = new ChromeOptions();
               options.addArguments("Web Test", "start-maximizing", "no-default-browser-check");
               capability.setCapability(ChromeOptions.CAPABILITY, options);
               capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
               //  capability.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, true);
-              capability.setPlatform(Platform.ANY);
+              capability.setPlatform(Platform.ANY);*/
               if (selGrid) {
                   driver = new RemoteWebDriver(new URL(nodeURL), capability);
                   log.info("execution started in the CHROME browser");
