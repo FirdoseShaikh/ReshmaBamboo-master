@@ -76,7 +76,7 @@ public abstract class BaseTest {
 
               System.setProperty("webdriver.chrome.driver", dir_localBrowserPath);
               ChromeOptions options = new ChromeOptions();
-              options.addArguments("port=9315");
+              options.addArguments("port=5566");
               options.addArguments("headless");
               options.addArguments("--disable-gpu");
               options.addArguments("disable-infobars");
